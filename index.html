@@ -556,6 +556,19 @@ const io = new IntersectionObserver(entries => {
 }, {threshold: .12, rootMargin: '0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+/* geometry fallback: a clipped ancestor can stop IntersectionObserver from
+   ever reporting these, so check position on scroll as well */
+function revealCheck() {
+  const vh = innerHeight || document.documentElement.clientHeight;
+  document.querySelectorAll('.reveal:not(.in)').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < vh - 40 && r.bottom > 0) el.classList.add('in');
+  });
+}
+addEventListener('scroll', () => requestAnimationFrame(revealCheck), { passive: true });
+addEventListener('resize', revealCheck, { passive: true });
+revealCheck();
+
 /* failsafe: never leave copy hidden if a script never runs */
 setTimeout(function(){ document.documentElement.classList.add('reveal-failsafe'); }, 3000);
 
