@@ -1,0 +1,7 @@
+# Cloudflare Pages configuration for Hasbunallah Fashion.
+# Deploy: npx wrangler pages deploy . --project-name=hasbunallah-fashion --branch=main
+name = "hasbunallah-fashion"
+compatibility_date = "2026-10-01"
+
+# The site is plain static files at the repo root; no Functions needed.
+pages_build_output_dir = "."
